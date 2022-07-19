@@ -1,4 +1,5 @@
 import { Container, Span } from './Statistics.styled';
+import PropTypes from 'prop-types';
 
 export const Statistics = ({
   good,
@@ -16,4 +17,12 @@ export const Statistics = ({
       <Span>Positive Feedback: {positivePercentage}%</Span>
     </Container>
   );
+};
+
+Statistics.propTypes = {
+  good: PropTypes.number.isRequired,
+  neutral: PropTypes.number.isRequired,
+  bad: PropTypes.number.isRequired,
+  total: PropTypes.number.isRequired,
+  positivePercentage: PropTypes.number.isRequired,
 };

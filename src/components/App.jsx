@@ -11,21 +11,11 @@ class App extends React.Component {
     bad: 0,
   };
 
-  addGoodFeedback = () => {
-    this.setState(prevState => ({
-      good: prevState.good + 1,
-    }));
-  };
+  addFeedback = event => {
+    const choosedOption = event.currentTarget.textContent;
 
-  addBadFeedback = () => {
     this.setState(prevState => ({
-      bad: prevState.bad + 1,
-    }));
-  };
-
-  addNeutralFeedback = () => {
-    this.setState(prevState => ({
-      neutral: prevState.neutral + 1,
+      [choosedOption]: prevState[choosedOption] + 1,
     }));
   };
 
@@ -40,30 +30,27 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Section title="Plaese leave feedback" />
-        <FeedbackOptions
-          addGoodFeedback={this.addGoodFeedback}
-          addNeutralFeedback={this.addNeutralFeedback}
-          addBadFeedback={this.addBadFeedback}
-        />
-        <Section title="Statistics" />
-
-        {this.countTotalFeedback() ? (
-          <Statistics
-            good={this.state.good}
-            neutral={this.state.neutral}
-            bad={this.state.bad}
-            total={this.countTotalFeedback()}
-            positivePercentage={this.countPositiveFeedbackPercentage()}
+        <Section title="Plaese leave feedback">
+          <FeedbackOptions
+            options={['good', 'neutral', 'bad']}
+            onLeaveFeedback={this.addFeedback}
           />
-        ) : (
-          <Notification message="There is no feedback" />
-        )}
-      </div>
+        </Section>
 
-      // <button type="button" onClick={() => {}}>
-      //   Button
-      // </button>
+        <Section title="Statistics">
+          {this.countTotalFeedback() ? (
+            <Statistics
+              good={this.state.good}
+              neutral={this.state.neutral}
+              bad={this.state.bad}
+              total={this.countTotalFeedback()}
+              positivePercentage={this.countPositiveFeedbackPercentage()}
+            />
+          ) : (
+            <Notification message="There is no feedback" />
+          )}
+        </Section>
+      </div>
     );
   }
 }
